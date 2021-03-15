@@ -35,16 +35,24 @@ nav {
 }
 
 header button,
-nav button {
+nav button,
+.btn-car {
   border: none;
-  color: rgb(255, 255, 255, 0.8);
+  color: rgb(255, 255, 255);
   font: inherit;
   background-color: inherit;
   outline: inherit;
 }
 
+.btn-car {
+  padding: 20px;
+  width: 100px;
+  height: 40px;
+}
+
 header button:hover,
-nav button:hover {
+nav button:hover,
+.btn-car:hover {
   color: rgb(255, 255, 255, 0.5);
 }
 
@@ -52,11 +60,25 @@ nav button:hover {
   padding: 1.5% 1%;
 }
 
+.sign {
+  border-radius: 5px;
+  box-shadow: none;
+  color: white;
+  background-color: #636d73;
+  margin-right: 2%;
+  font-weight: bold;
+}
+
 .price,
-.card-title {
+.card-title,
+#total {
   font-weight: 600;
 }
 
 #cont {
   display: none;
+}
+
+footer {
+  font-weight: 700;
 }

@@ -14,7 +14,7 @@ const data = "data.json";
 let it = document.getElementById("items");
 
 document.body.onload = openPage("Burguers", this);
-document.body.onload = it.textContent = cont + " items";
+document.body.onload = it.textContent = cont.textContent + " items";
 
 //document.getElementById("Burguers").style.display = "block";
 
@@ -98,7 +98,7 @@ function openPage(pageName, elmnt) {
         // Add to car
         let a = document.createElement("button");
         let bd5 = document.createAttribute("class");
-        bd5.value = "btn btn-primary bg-dark";
+        bd5.value = "btn btn-car bg-dark";
         let bd6 = document.createAttribute("onclick");
         bd6.value = "addItem('" + item.name + "', " + i + ")";
         a.textContent = "Add to car";
@@ -120,11 +120,7 @@ function openPage(pageName, elmnt) {
     });
 }
 
-let cont1 = document.getElementById("cont");
-
-if (cont1.textContent === "") {
-  cont1.textContent = 0;
-}
+let n = 0;
 
 function addItem(item, i) {
   let tb = document.getElementById("tb");
@@ -139,20 +135,17 @@ function addItem(item, i) {
   let label = document.getElementById("items");
   label.textContent = cont.textContent + " items";
 
-  console.log(cont.textContent);
-
-  let orders = document.getElementById("Order");
+  //let orders = document.getElementById("Order");
   let tr = document.getElementById(item + i);
-  console.log(tr);
   let td = document.getElementsByClassName("tdBody");
+  let tot = document.getElementById("total");
 
   fetch(url)
     .then((res) => res.json())
     .then((res) => {
       let prod = res.find((some) => some.name === item);
 
-      if (tr === null) {
-        console.log("entre");
+      if (tr === null || td === null) {
         let tr = document.createElement("tr");
         let at = document.createAttribute("id");
         at.value = item + i;
@@ -183,7 +176,7 @@ function addItem(item, i) {
         let attp1 = document.createAttribute("onclick");
         attp1.value = "modify(" + tr + ", 1)";
         let attp2 = document.createAttribute("class");
-        attp2.value = "bg-dark";
+        attp2.value = "sign";
         btnPlus.setAttributeNode(attp1);
         btnPlus.setAttributeNode(attp2);
         btnPlus.textContent = "+";
@@ -192,7 +185,7 @@ function addItem(item, i) {
         let attm1 = document.createAttribute("onclick");
         attm1.value = "modify(" + tr + ", 2)";
         let attm2 = document.createAttribute("class");
-        attm2.value = "bg-dark";
+        attm2.value = "sign";
         btnMinus.setAttributeNode(attm1);
         btnMinus.setAttributeNode(attm2);
         btnMinus.textContent = "-";
@@ -208,32 +201,14 @@ function addItem(item, i) {
         tr.appendChild(td6);
         tb.appendChild(tr);
 
-        console.log(tb);
+        n += parseFloat(td5.textContent);
       } else {
+        //console.log(tr);
         let td1 = tr.getElementById("tdBody");
         td1.textContent = parseInt(td1.textContent) + 1;
       }
-
-      // for (let i = 0; i < td.length; i++) {
-      //   td.item(i);
-      // }
-
-      // let obj = list.find((o) => o.name === item);
-      // if (obj === undefined) {
-      //   list.push("{'name': " + item + ", 'quantity': 1}");
-      // } else {
-      //   obj.q;
-      // }
+      tot.textContent = "Total: $" + n;
     });
-
-  // fetch(data, {
-  //     method: 'POST',
-  //     body: JSON.stringify({'cont': cont+1, 'order':});
-  //   });
-  // let cont = parseInt(document.getElementById("items").textContent[0]);
-  // cont += 1;
-  // let label = document.getElementById("items");
-  // label.textContent = total + " items";
 }
 
 function getOrder() {
@@ -248,9 +223,4 @@ function getOrder() {
   }
 
   document.getElementById("Order").style.display = "block";
-
-  let table = document.getElementById("tb");
-
-  //for (let i = 0; i < )
-  //table.appendChild()
 }
