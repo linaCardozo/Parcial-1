@@ -2,11 +2,61 @@ h1 {
   font-family: "Satisfy", cursive;
 }
 
+h2 {
+  text-align: center;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  font-weight: 600;
+}
+
+header h1,
+header div {
+  line-height: 80px;
+}
+
 header img {
-  width: 50px;
-  height: 50px;
+  width: 100%;
+}
+
+#car {
+  margin-top: 2%;
+}
+
+nav {
+  margin-top: 2%;
+}
+
+#items {
+  text-align: left;
 }
 
 .card {
   width: 18rem;
+}
+
+header button,
+nav button {
+  border: none;
+  color: rgb(255, 255, 255, 0.8);
+  font: inherit;
+  background-color: inherit;
+  outline: inherit;
+}
+
+header button:hover,
+nav button:hover {
+  color: rgb(255, 255, 255, 0.5);
+}
+
+.bg-dark {
+  padding: 1.5% 1%;
+}
+
+.price,
+.card-title {
+  font-weight: 600;
+}
+
+#cont {
+  display: none;
 }

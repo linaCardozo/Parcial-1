@@ -1,140 +1,256 @@
-/*const url =
-  "https://gist.githubusercontent.com/josejbocanegra/9a28c356416badb8f9173daf36d1460b/raw/5ea84b9d43ff494fcbf5c5186544a18b42812f09/restaurant.json";*/
+const url =
+  "https://gist.githubusercontent.com/josejbocanegra/9a28c356416badb8f9173daf36d1460b/raw/5ea84b9d43ff494fcbf5c5186544a18b42812f09/restaurant.json";
 
-const url = "data.json";
+const data = "data.json";
 
-fetch(url)
-  .then((res) => res.json())
-  .then((res) => {
-    let main = document.getElementById("cards");
+// Open initially the Burguers page
 
-    let title = document.createElement("h2");
-    //let cards = document.createElement("tbody");
+// tabcontent = document.getElementsByClassName("tab-content");
+// for (i = 0; i < tabcontent.length; i++) {
+//   tabcontent[i].style.display = "none";
+// }
 
-    let l = res[0].products.length;
+//let cont = parseInt(document.getElementById("items").textContent[0]);
+let it = document.getElementById("items");
 
-    for (let i = 0; i < l; i++) {
-        
+document.body.onload = openPage("Burguers", this);
+document.body.onload = it.textContent = cont + " items";
+
+//document.getElementById("Burguers").style.display = "block";
+
+function openPage(pageName, elmnt) {
+  let i, tabcontent;
+  tabcontent = document.getElementsByClassName("tab-content");
+
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  document.getElementById(pageName).style.display = "block";
+
+  fetch(url)
+    .then((res) => res.json())
+    .then((res) => {
+      let item = res.find((item) => item.name === pageName);
+      let idItem = document.getElementById(pageName);
+
+      // Card group
+      let group = document.createElement("div");
+      let g1 = document.createAttribute("class");
+      g1.value = "card-group";
+      group.setAttributeNode(g1);
+
+      for (let i = 0; i < item.products.length; i++) {
+        if (i % 4 == 0 && i > 0) {
+          let cnt = document.createElement("div");
+          let g2 = document.createAttribute("class");
+          g2.value = "w-100 d-block";
+          cnt.setAttributeNode(g2);
+
+          group.appendChild(cnt);
+        }
+
         // Creating div
-      let div = document.createElement("div");
-      let att1 = document.createAttribute("class");
-      att1.value = "card";
-      div.setAttributeNode(att1);
-      
-      // Image
-      let img = document.createElement("img" src="" class="card-img-top" alt="Item" />)
-      let att2 = document.createAttribute("src");
-      att2.value = res[0].products[i].image;
-      let att3 = document.createAttribute("class");
-      att3.value = "card-img-top";
-      let att4 = document.createAttribute("alt");
-      att4.value = "Item", i;
-      div.setAttributeNode(att2);
-      div.setAttributeNode(att3);
-      div.setAttributeNode(att4);
-      console.log(img);
+        let div = document.createElement("div");
+        let att1 = document.createAttribute("class");
+        att1.value = "card m-2";
+        div.setAttributeNode(att1);
 
-      let id = document.createElement("th");
-      let event = document.createElement("td");
-      let squirrel = document.createElement("td");
+        // Image
+        let img = document.createElement("img");
+        let att2 = document.createAttribute("src");
+        att2.value = item.products[i].image;
+        let att3 = document.createAttribute("class");
+        att3.value = "card-img-top";
+        let att4 = document.createAttribute("alt");
+        att4.value = "Item " + i;
+        img.setAttributeNode(att2);
+        img.setAttributeNode(att3);
+        img.setAttributeNode(att4);
 
-      id.textContent = i + 1;
-      event.textContent = res[i].events;
-      squirrel.textContent = res[i].squirrel;
+        // Body of the card
+        let div2 = document.createElement("div");
+        let bd1 = document.createAttribute("class");
+        bd1.value = "card-body";
+        div2.setAttributeNode(bd1);
 
-      if (squirrel.textContent === "true") {
-        row.style.backgroundColor = "rgb(244, 165, 165, 0.7)";
-        //row.className = "bg-danger";
+        // Title
+        let h5 = document.createElement("h5");
+        let bd2 = document.createAttribute("class");
+        bd2.value = "card-title";
+        h5.textContent = item.products[i].name;
+        h5.setAttributeNode(bd2);
+
+        // Description
+        let p = document.createElement("p");
+        let bd3 = document.createAttribute("class");
+        bd3.value = "card-text";
+        p.textContent = item.products[i].description;
+        p.setAttributeNode(bd3);
+
+        // Price
+        let p2 = document.createElement("p");
+        let bd4 = document.createAttribute("class");
+        bd4.value = "card-text price";
+        p2.textContent = "$" + item.products[i].price;
+        p2.setAttributeNode(bd4);
+
+        // Add to car
+        let a = document.createElement("button");
+        let bd5 = document.createAttribute("class");
+        bd5.value = "btn btn-primary bg-dark";
+        let bd6 = document.createAttribute("onclick");
+        bd6.value = "addItem('" + item.name + "', " + i + ")";
+        a.textContent = "Add to car";
+        a.setAttributeNode(bd5);
+        a.setAttributeNode(bd6);
+
+        div2.appendChild(h5);
+        div2.appendChild(p);
+        div2.appendChild(p2);
+        div2.appendChild(a);
+
+        div.appendChild(img);
+        div.appendChild(div2);
+
+        group.appendChild(div);
       }
 
-      row.appendChild(id);
-      row.appendChild(event);
-      row.appendChild(squirrel);
+      idItem.appendChild(group);
+    });
+}
 
-      tblBody1.appendChild(row);
-    }
+let cont1 = document.getElementById("cont");
 
-    let dict = {};
+if (cont1.textContent === "") {
+  cont1.textContent = 0;
+}
 
-    for (let i = 0; i < l; i++) {
-      for (let j = 0; j < res[i].events.length; j++) {
-        let item = res[i].events[j];
+function addItem(item, i) {
+  let tb = document.getElementById("tb");
+  let cont = document.getElementById("cont");
 
-        if (dict[item] === undefined) {
-          dict[item] = [0, 0, 0, 0, 0];
-        }
+  if (cont.textContent === "") {
+    cont.textContent = 1;
+  } else {
+    cont.textContent = parseInt(cont.textContent) + 1;
+  }
 
-        // False negatives
-        if (!res[i].squirrel) {
-          dict[item][1]++;
-        }
-        // True positives
-        else {
-          dict[item][3]++;
-        }
+  let label = document.getElementById("items");
+  label.textContent = cont.textContent + " items";
+
+  console.log(cont.textContent);
+
+  let orders = document.getElementById("Order");
+  let tr = document.getElementById(item + i);
+  console.log(tr);
+  let td = document.getElementsByClassName("tdBody");
+
+  fetch(url)
+    .then((res) => res.json())
+    .then((res) => {
+      let prod = res.find((some) => some.name === item);
+
+      if (tr === null) {
+        console.log("entre");
+        let tr = document.createElement("tr");
+        let at = document.createAttribute("id");
+        at.value = item + i;
+        tr.setAttributeNode(at);
+
+        let td1 = document.createElement("td");
+        td1.textContent = cont.textContent;
+
+        let td2 = document.createElement("td");
+        let att = document.createAttribute("class");
+        att.value = "tdBody";
+        td2.setAttributeNode(att);
+        td2.textContent = 1;
+
+        let td3 = document.createElement("td");
+        td3.textContent = prod.products[i].name;
+
+        let td4 = document.createElement("td");
+        td4.textContent = prod.products[i].price;
+
+        let td5 = document.createElement("td");
+        td5.textContent =
+          parseFloat(td2.textContent) * parseFloat(td4.textContent);
+
+        let td6 = document.createElement("td");
+
+        let btnPlus = document.createElement("button");
+        let attp1 = document.createAttribute("onclick");
+        attp1.value = "modify(" + tr + ", 1)";
+        let attp2 = document.createAttribute("class");
+        attp2.value = "bg-dark";
+        btnPlus.setAttributeNode(attp1);
+        btnPlus.setAttributeNode(attp2);
+        btnPlus.textContent = "+";
+
+        let btnMinus = document.createElement("button");
+        let attm1 = document.createAttribute("onclick");
+        attm1.value = "modify(" + tr + ", 2)";
+        let attm2 = document.createAttribute("class");
+        attm2.value = "bg-dark";
+        btnMinus.setAttributeNode(attm1);
+        btnMinus.setAttributeNode(attm2);
+        btnMinus.textContent = "-";
+
+        td6.appendChild(btnPlus);
+        td6.appendChild(btnMinus);
+
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        tr.appendChild(td4);
+        tr.appendChild(td5);
+        tr.appendChild(td6);
+        tb.appendChild(tr);
+
+        console.log(tb);
+      } else {
+        let td1 = tr.getElementById("tdBody");
+        td1.textContent = parseInt(td1.textContent) + 1;
       }
-    }
 
-    let keys = Object.keys(dict);
+      // for (let i = 0; i < td.length; i++) {
+      //   td.item(i);
+      // }
 
-    for (let i = 0; i < l; i++) {
-      for (let j = 0; j < keys.length; j++) {
-        // False positives
-        if (!res[i].events.includes(keys[j]) && res[i].squirrel) {
-          dict[keys[j]][2]++;
-        }
-        // True negatives
-        else if (!res[i].events.includes(keys[j]) && !res[i].squirrel) {
-          dict[keys[j]][0]++;
-        }
-      }
-    }
+      // let obj = list.find((o) => o.name === item);
+      // if (obj === undefined) {
+      //   list.push("{'name': " + item + ", 'quantity': 1}");
+      // } else {
+      //   obj.q;
+      // }
+    });
 
-    let corr = [];
+  // fetch(data, {
+  //     method: 'POST',
+  //     body: JSON.stringify({'cont': cont+1, 'order':});
+  //   });
+  // let cont = parseInt(document.getElementById("items").textContent[0]);
+  // cont += 1;
+  // let label = document.getElementById("items");
+  // label.textContent = total + " items";
+}
 
-    // Calculating correlations
+function getOrder() {
+  let h2 = document.createElement("h2");
+  h2.textContent = "Order detail";
 
-    for (let i = 0; i < keys.length; i++) {
-      let TN = dict[keys[i]][0];
-      let FN = dict[keys[i]][1];
-      let FP = dict[keys[i]][2];
-      let TP = dict[keys[i]][3];
-      dict[keys[i]][4] =
-        (TP * TN - FP * FN) /
-        Math.sqrt((TP + FP) * (TP + FN) * (TN + FP) * (TN + FN));
-      corr[i] = dict[keys[i]][4];
-    }
+  let tabcontent;
+  tabcontent = document.getElementsByClassName("tab-content");
 
-    // Sorting the correlations in descending order
-    corr.sort((a, b) => b - a);
+  for (let i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
 
-    // Filling the second table with the events and its correlations
+  document.getElementById("Order").style.display = "block";
 
-    for (let i = 0; i < keys.length; i++) {
-      // Table rows
-      let row = document.createElement("tr");
+  let table = document.getElementById("tb");
 
-      let id = document.createElement("th");
-      let event = document.createElement("td");
-      let correlation = document.createElement("td");
-
-      let new_keys = Object.keys(dict);
-
-      id.textContent = i + 1;
-
-      let k = new_keys.find((element) => dict[element][4] === corr[i]);
-      event.textContent = k;
-      delete dict[k];
-
-      correlation.textContent = corr[i];
-
-      row.appendChild(id);
-      row.appendChild(event);
-      row.appendChild(correlation);
-
-      tblBody2.appendChild(row);
-    }
-
-    table1.appendChild(tblBody1);
-    table2.appendChild(tblBody2);
-  });
+  //for (let i = 0; i < )
+  //table.appendChild()
+}

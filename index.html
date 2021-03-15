@@ -23,6 +23,7 @@
 
     <title>Restaurant</title>
   </head>
+
   <body>
     <header>
       <div class="container">
@@ -30,17 +31,19 @@
           <div class="col-10">
             <h1 class="align-text-bottom">Restaurant & Lounge</h1>
           </div>
-          <div class="col-sm">
-            <img src="https://i.imgur.com/1EKrQIi.png" alt="shopping cart" />
+          <div class="col">
+            <button onclick="getOrder()">
+              <img src="https://i.imgur.com/1EKrQIi.png" alt="Shopping car" />
+            </button>
           </div>
-          <div class="col-sm">
-            <p>items</p>
+          <div class="col">
+            <p id="items">0 items</p>
           </div>
         </div>
         <div class="row">
           <img
             src="https://i.imgur.com/S8Ffdqa.png"
-            alt="Hamburguer (banner)"
+            alt="Banner - Hamburger"
             class="img-fluid mx-auto d-block"
           />
         </div>
@@ -48,42 +51,98 @@
     </header>
 
     <nav>
-      <div class="container">
+      <div class="container bg-dark">
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link active" href="#">Burgers</a>
+            <button class="nav-link" onclick="openPage('Burguers', this)">
+              Burgers
+            </button>
           </li>
+
           <li class="nav-item">
-            <a class="nav-link active" href="#">Tacos</a>
+            <button class="nav-link" onclick="openPage('Tacos', this)">
+              Tacos
+            </button>
           </li>
+
           <li class="nav-item">
-            <a class="nav-link active" href="#">Salads</a>
+            <button class="nav-link" onclick="openPage('Salads', this)">
+              Salads
+            </button>
           </li>
+
           <li class="nav-item">
-            <a class="nav-link active" href="#">Desserts</a>
+            <button class="nav-link" onclick="openPage('Desserts', this)">
+              Desserts
+            </button>
           </li>
+
           <li class="nav-item">
-            <a class="nav-link active" href="#">Drinks & Sides</a>
+            <button
+              class="nav-link"
+              onclick="openPage('Drinks and Sides', this)"
+            >
+              Drinks & Sides
+            </button>
           </li>
         </ul>
       </div>
     </nav>
 
     <main>
-      <div class="container" id="cards">
-        <h2>Burgers</h2>
-        <div class="card" style="width: 18rem">
-          <img src="" class="card-img-top" alt="Item" />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </p>
-            <a href="#" class="btn btn-primary">Add to car</a>
+      <div class="container">
+        <div id="Burguers" class="tab-content">
+          <h2>Burgers</h2>
+        </div>
+
+        <div id="Tacos" class="tab-content">
+          <h2>Tacos</h2>
+        </div>
+
+        <div id="Salads" class="tab-content">
+          <h2>Salads</h2>
+        </div>
+
+        <div id="Desserts" class="tab-content">
+          <h2>Desserts</h2>
+        </div>
+
+        <div id="Drinks and Sides" class="tab-content">
+          <h2>Drinks & Sides</h2>
+        </div>
+
+        <div id="Order" class="tab-content">
+          <h2>Order detail</h2>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Qty.</th>
+                <th>Description</th>
+                <th>Unit Price</th>
+                <th>Amount</th>
+                <th>Modify</th>
+              </tr>
+            </thead>
+
+            <tbody id="tb"></tbody>
+          </table>
+
+          <div class="row">
+            <div class="col-8">
+              <p>Something</p>
+            </div>
+            <div class="col">
+              <button onclick="cancelOrder()">Cancel</button>
+            </div>
+            <div class="col">
+              <button onclick="confirmOrder()">Confirm order</button>
+            </div>
           </div>
         </div>
       </div>
+
+      <div id="cont">0 items</div>
     </main>
 
     <footer></footer>
